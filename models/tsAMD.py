@@ -57,8 +57,4 @@ class AMD(nn.Module):
         if self.target_slice:
             x = x[:, :, self.target_slice]
 
-        # x, moe_loss = self.model(x)
-        if self.norm:
-            x = self.rev_norm(x, 'denorm', self.target_slice)
-
         return x, moe_loss
