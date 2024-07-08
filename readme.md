@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="assets/logo.png" width="100">
+    <img src="assets/logo.png" width="150">
 </p>
 
 
@@ -15,7 +15,7 @@ The Adaptive Multi-Scale Decomposition Framework (AMD) is a cutting-edge solutio
 </p>
 
 ## Prerequisites
-To get started, ensure you are using Python 3.9. Install the necessary dependencies by running:
+To get started, ensure you are using Python 3.10. Install the necessary dependencies by running:
 
 ```bash
 pip install -r requirements.txt
@@ -38,7 +38,7 @@ data
 ```
 
 ## Training Example
-All training scripts are located in the `./scripts` directory. To train a model using the weather dataset, run the following command:
+All training scripts are located in the `./scripts` directory. The details of the hyper-parameter settings are in Appendix C.4 in our paper. To train a model using the `weather` dataset, run the following command:
 
 ```bash
 ./scripts/Weather.sh
