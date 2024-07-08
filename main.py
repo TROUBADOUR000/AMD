@@ -11,12 +11,9 @@ if str(ROOT) not in sys.path:
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 import torch
-import torch.optim as optim
 from tqdm import tqdm
 from copy import deepcopy
-import pandas as pd
 
-import random
 import time
 
 from utils.general import set_seed
@@ -58,6 +55,7 @@ def main(args):
         alpha=args.alpha,
         target_slice=data_loader.target_slice,
         norm=args.norm,
+        layernorm=args.layernorm
     ).to(device)
 
     print(sum(p.numel() for p in model.parameters()))
@@ -130,11 +128,7 @@ def main(args):
                 best_loss = val_mloss
                 best_model = deepcopy(model.state_dict())
                 torch.save(best_model, os.path.join(save_directory, "best.pt"))
-                patience = 0
-            else:
-                patience += 1
-                # if patience == args.patience:
-                #   break
+
         print(f"val loss: {val_mloss.item()}, val MSE: {val_mse.item()}, val MAE: {val_mae.item()}")
 
         # scheduler.step()
@@ -179,14 +173,14 @@ def infer_extension(dataset_name):
 
 
 def parse_args():
-    dataset = "solar_AL"
+    dataset = "ETTh1"
     parser = argparse.ArgumentParser()
     # basic config
     parser.add_argument('--seed', type=int, default=2024, help='random seed')
     # data loader
     parser.add_argument('--data',
                         type=str,
-                        default=ROOT / f'data/{dataset}.{infer_extension(dataset)}',
+                        default=ROOT / f'../data/{dataset}.{infer_extension(dataset)}',
                         help='dataset path')
     parser.add_argument(
         '--feature_type',
@@ -234,7 +228,7 @@ def parse_args():
     parser.add_argument(
         # 0.0  0.5  1.0
         '--alpha',
-        type=int,
+        type=float,
         default=0.0,
         help='feature feature dimension',
     )
@@ -262,6 +256,12 @@ def parse_args():
         type=bool,
         default=True,
         help='RevIN',
+    )
+    parser.add_argument(
+        '--layernorm',
+        type=bool,
+        default=True,
+        help='layernorm',
     )
     parser.add_argument(
         '--dropout', type=float, default=0.1, help='dropout rate'

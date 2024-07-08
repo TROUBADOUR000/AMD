@@ -6,6 +6,7 @@ import torch
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 
+from pathlib import Path
 
 class CustomDataLoader:
     """Generate data loader from raw data."""
@@ -13,7 +14,7 @@ class CustomDataLoader:
     def __init__(
             self, data, batch_size, seq_len, pred_len, feature_type, target='OT'
     ):
-        self.data = data
+        self.data = Path(data)
         self.batch_size = batch_size
         self.seq_len = seq_len
         self.pred_len = pred_len

@@ -10,7 +10,7 @@ from models.tsmoe import AMS
 class AMD(nn.Module):
     """Implementation of AMD."""
 
-    def __init__(self, input_shape, pred_len, n_block, dropout, patch, k, c, alpha, target_slice, norm=True):
+    def __init__(self, input_shape, pred_len, n_block, dropout, patch, k, c, alpha, target_slice, norm=True, layernorm=True):
         super(AMD, self).__init__()
 
         self.target_slice = target_slice
@@ -19,9 +19,9 @@ class AMD(nn.Module):
         if self.norm:
             self.rev_norm = RevIN(input_shape[-1])
 
-        self.pastmixing = MDM(input_shape, k=k, c=c, layernorm=False)
+        self.pastmixing = MDM(input_shape, k=k, c=c, layernorm=layernorm)
 
-        self.fc_blocks = nn.ModuleList([DDI(input_shape, dropout=dropout, patch=patch, alpha=alpha, layernorm=False)
+        self.fc_blocks = nn.ModuleList([DDI(input_shape, dropout=dropout, patch=patch, alpha=alpha, layernorm=layernorm)
                                         for _ in range(n_block)])
 
         self.moe = AMS(input_shape, pred_len, ff_dim=2048, dropout=dropout, num_experts=8, top_k=2)

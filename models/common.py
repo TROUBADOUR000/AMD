@@ -130,7 +130,7 @@ class DDI(nn.Module):
             x = self.norm(torch.flatten(x, 1, -1)).reshape(x.shape)
 
         output = torch.zeros_like(x)
-        output[:, :, :self.n_history * self.patch] = x[:, :, :self.n_history * self.patch]
+        output[:, :, :self.n_history * self.patch] = x[:, :, :self.n_history * self.patch].clone()
         for i in range(self.n_history * self.patch, self.input_shape[0], self.patch):
             # input [batch_size, feature_num, self.n_history * patch]
             input = output[:, :, i - self.n_history * self.patch: i]
