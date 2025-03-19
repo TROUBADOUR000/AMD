@@ -48,11 +48,11 @@ All training scripts are located in the `./scripts` directory. The details of th
 If you find this repository helpful, please cite our paper:
 
 ```bibtex
-@article{hu2024adaptive,
+@inproceedings{hu2025adaptive,
   title={Adaptive Multi-Scale Decomposition Framework for Time Series Forecasting},
   author={Hu, Yifan and Liu, Peiyuan and Zhu, Peng and Cheng, Dawei and Dai, Tao},
-  journal={arXiv preprint arXiv:2406.03751},
-  year={2024}
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  year={2025}
 }
 ```
 
